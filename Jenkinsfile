@@ -7,14 +7,16 @@ pipeline {
   }  
 
   stages {
-    stage("Build Docker Image"){
-      stage("Set Up Docker Buildx") {
+
+    stage("Set Up Docker Buildx") {
       steps {
         sh "docker buildx create --use || echo 'Buildx builder already exists'"
         sh "docker buildx inspect --bootstrap"
-        }
       }
+    }
+    
 
+    stage("Build Docker Image") {     
       steps {
         sh """
           docker buildx build \
