@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage("Login to GitHub Container Registry") {
       steps { 
-        sh "docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} -p ${GITHUB_CREDENTIALS_PSW}"
+        sh "echo ${GITHUB_CREDENTIALS_PSW} | docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} --password-stdin"
       }
     }
 
