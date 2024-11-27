@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage("Build Docker Image"){
       steps {
-        sh "docker buildx build --tag ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} ."
+        sh "docker build -t ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} ."
       }
     }
 
