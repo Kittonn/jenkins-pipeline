@@ -9,22 +9,8 @@ pipeline {
   stages {
     stage("Build") {
       steps {
-        sh "docker buildx build --tag ${IMAGE_NAME} ."
+        sh "docker buildx build --push --tag ${IMAGE_NAME} --platform linux/amd64,linux/arm64 ."
       }
     }
   }
-  //   stage("Login to GitHub Container Registry") {
-  //     steps { 
-  //       sh "docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} -p ${GITHUB_CREDENTIALS_PSW}"
-  //     }
-  //   }
-
-    
-
-  //   stage("Build Docker Image") {     
-  //     steps {
-  //       sh "docker buildx build --tag ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} --push ."
-  //     }
-  //   }
-  // }
 }
