@@ -7,18 +7,25 @@ pipeline {
   }  
 
   stages {
-    stage("Login to GitHub Container Registry") {
-      steps { 
-        sh "docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} -p ${GITHUB_CREDENTIALS_PSW}"
-      }
-    }
-
-    
-
-    stage("Build Docker Image") {     
+    stage("Build") {
       steps {
-        sh "docker buildx build --tag ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} --push ."
+        sh "docker build --tag ${IMAGE_NAME} ."
+        sh "docker image ls"
       }
     }
   }
+  //   stage("Login to GitHub Container Registry") {
+  //     steps { 
+  //       sh "docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} -p ${GITHUB_CREDENTIALS_PSW}"
+  //     }
+  //   }
+
+    
+
+  //   stage("Build Docker Image") {     
+  //     steps {
+  //       sh "docker buildx build --tag ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} --push ."
+  //     }
+  //   }
+  // }
 }
