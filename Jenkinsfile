@@ -9,12 +9,12 @@ pipeline {
   stages {
     stage("Build Docker Image"){
       steps {
-        sh "docker build -t ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} ."
+        sh "docker buildx build -t ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} ."
       }
     }
 
 
-    stage("Login to GitHub Container Registry") {
+    stage("Lojgin to GitHub Container Registry") {
       steps { 
         sh "docker login ghcr.io -u ${GITHUB_CREDENTIALS_USR} -p ${GITHUB_CREDENTIALS_PSW}"
       }
