@@ -8,8 +8,20 @@ pipeline {
 
   stages {
     stage("Build Docker Image"){
+      stage("Set Up Docker Buildx") {
       steps {
-        sh "docker buildx build -t ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} ."
+        sh "docker buildx create --use || echo 'Buildx builder already exists'"
+        sh "docker buildx inspect --bootstrap"
+        }
+      }
+
+      steps {
+        sh """
+          docker buildx build \
+          --platform linux/amd64,linux/arm64 \
+          -t ghcr.io/${GITHUB_CREDENTIALS_USR}/${IMAGE_NAME}:${BUILD_NUMBER} \
+          --push .
+        """
       }
     }
 
