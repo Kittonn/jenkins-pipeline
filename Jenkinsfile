@@ -30,10 +30,8 @@ pipeline {
 
         stage("Deploy") {
             agent { label "pre-prod-agent" }
-            environment {
-                PORT = credentials('PORT')
-            }
             steps {
+                sh "docker images"
                 script {
                     docker.withRegistry(REGISTRY_URL, REGISTRY_CREDENTIALS_NAME) {
                         docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun("-p 3000:3000 -e PORT=3000")
