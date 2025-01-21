@@ -30,7 +30,11 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                sh "docker run -dp 3000:3000 -e PORT=3000 ${IMAGE_NAME}:${BUILD_NUMBER}"
+                script {
+                    docker.withRegistry(REGISTRY_URL, REGISTRY_CREDENTIALS_NAME) {
+                        docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun('-e "PORT=3000"' + ' -p 3000:3000')
+                    }
+                }
             }
         }
     }
