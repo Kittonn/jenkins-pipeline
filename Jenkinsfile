@@ -27,5 +27,17 @@ pipeline {
                 }
             }
         }
+
+        stage("Deploy") {
+            agent { label "pre-prod-agent" }
+            environment {
+                PORT = credentials('PORT')
+            }
+            steps {
+                script {
+                    docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun("-p ${PORT}:${PORT}")
+                }
+            }
+        }
     }
 }
