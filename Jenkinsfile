@@ -34,9 +34,8 @@ pipeline {
                 PORT = credentials('PORT')
             }
             steps {
-                echo "${PORT}"
                 script {
-                    docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun("-p ${PORT}:${PORT}")
+                    docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun("-e PORT=${PORT} -p ${PORT}:${PORT}")
                 }
             }
         }
