@@ -10,7 +10,8 @@ pipeline{
     stages {
         stage("Build Docker Image") {
             steps{
-                sh 'docker --version'
+                docker.build('{IMAGE_NAME}:{BUILD_NUMBER}')
+                sh 'docker images'
             }
         }
     }
