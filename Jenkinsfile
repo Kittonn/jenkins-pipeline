@@ -1,17 +1,17 @@
-pipeline{
+pipeline {
     agent {
         label "test-agent"
     }
 
     environment {
-        IMAGE_NAME = 'ghcr.io/kittonn/jenkins-pipeline'
+        IMAGE_NAME = "ghcr.io/kittonn/jenkins-pipeline"
     }
 
     stages {
         stage("Build Docker Image") {
-            steps{
+            steps {
                 script {
-                    docker.build('${IMAGE_NAME}:${BUILD_NUMBER}')
+                    docker.build("${IMAGE_NAME}:${BUILD_NUMBER}")
                 }
 
                 sh 'docker images'
