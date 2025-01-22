@@ -33,7 +33,6 @@ pipeline {
                 script {
                     docker.withRegistry(REGISTRY_URL, REGISTRY_CREDENTIALS_NAME) {
                         docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").withRun('-e "PORT=3000" -p 3000:3000') {
-
                         }
                     }
                 }
