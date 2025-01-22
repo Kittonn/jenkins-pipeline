@@ -11,19 +11,11 @@ pipeline {
     }
 
     stages {
-        stage("Build Docker Image") {
+        stage("Build and Push Image to GHCR") {
             steps {
                 script {
-                    docker.build("${IMAGE_NAME}:${BUILD_NUMBER}")
-                }
-            }
-        }
-
-        stage("Push Image to GHCR") {
-            steps {
-                script {    
                     docker.withRegistry(REGISTRY_URL, REGISTRY_CREDENTIALS_NAME) {
-                        docker.image("${IMAGE_NAME}:${BUILD_NUMBER}").push()
+                        docker.build("${IMAGE_NAME}:${BUILD_NUMBER}").push()
                     }
                 }
             }
@@ -40,6 +32,12 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+
+    post{
+        always{
+            sh "docker system prune -af"
         }
     }
 }
